@@ -7,6 +7,18 @@
 
 ---
 
+## 界面预览
+
+![主界面](docs/screenshots/hero.png)
+
+| 图像情绪识别 | 文档分析 |
+| --- | --- |
+| ![图像情绪识别](docs/screenshots/emotion-recognition.png) | ![文档分析](docs/screenshots/document-analysis.png) |
+
+> 上传一张照片即可识别 7 类情绪；上传 PDF / Word 可获得结构化的内容分析结果。
+
+---
+
 ## 关于署名与二次使用
 
 本项目为**省级二等奖获奖作品**，代码、文档与交互设计均为原创，开源目的仅为学习与技术交流。
