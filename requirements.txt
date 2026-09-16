@@ -1,0 +1,32 @@
+# 心镜 (xinjing-backend) 运行依赖
+#
+# 安装：pip install -r requirements.txt
+# 推荐 Python 3.11（tensorflow / openai-whisper 在 3.11 上兼容性最稳）
+#
+# 如需锁定精确版本，在一个能正常跑起来的虚拟环境里执行：
+#     pip freeze > requirements.txt
+# 这样别人拿到的是与你完全一致的版本，可复现性最好。
+
+# --- Web 服务 ---
+fastapi
+uvicorn
+python-multipart
+
+# --- 图像情绪识别 ---
+opencv-python
+deepface
+tensorflow
+tf-keras
+numpy
+
+# --- 语音转写 ---
+openai-whisper
+
+# --- 大模型对话 ---
+zhipuai
+
+# --- 报告生成与文档解析 ---
+reportlab
+python-docx
+PyPDF2
+pandas

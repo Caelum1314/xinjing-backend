@@ -14,28 +14,39 @@ async def chat(
         deep_think: bool = Form(False),
         user_id: str = Form("default")
 ):
-    add_to_history(user_id, "user", message)
+    try:
+        add_to_history(user_id, "user", message)
 
-    history = get_user_history(user_id)
-    messages = list(history)[:-1] + [{"role": "user", "content": message}]
+        history = get_user_history(user_id)
+        messages = list(history)[:-1] + [{"role": "user", "content": message}]
 
-    response = call_ai(messages, stream=True, enable_search=enable_search, deep_think=deep_think)
+        response = call_ai(messages, stream=True, enable_search=enable_search, deep_think=deep_think)
 
-    async def generate():
-        full_reply = ""
-        for chunk in response:
-            if chunk.choices[0].delta.content:
-                content = chunk.choices[0].delta.content
-                full_reply += content
-                yield content
+        async def generate():
+            full_reply = ""
+            for chunk in response:
+                delta = chunk.choices[0].delta
+                if delta.content:
+                    full_reply += delta.content
+                    yield delta.content
 
-        add_to_history(user_id, "assistant", full_reply)
-        add_chat_record(message, full_reply)
-        new_achievements = update_stats("chat")
-        if new_achievements:
-            yield f"\n\n🎉 解锁成就：{new_achievements[0]['name']}！"
+                # 开启联网检索时，把命中的搜索结果一并回传，前端可展示
+                tool_calls = getattr(delta, "tool_calls", None)
+                if tool_calls:
+                    for tool in tool_calls:
+                        if getattr(tool.function, "name", "") == "web_search":
+                            yield f"\n\n🔍 搜索结果：\n{tool.function.arguments}\n"
 
-    return StreamingResponse(generate(), media_type="text/event-stream")
+            add_to_history(user_id, "assistant", full_reply)
+            add_chat_record(message, full_reply)
+            new_achievements = update_stats("chat")
+            if new_achievements:
+                yield f"\n\n🎉 解锁成就：{new_achievements[0]['name']}！"
+
+        return StreamingResponse(generate(), media_type="text/event-stream")
+    except Exception as e:
+        print(f"Chat error: {e}")
+        return {"reply": f"遇到问题: {str(e)}"}
 
 
 @router.post("/clear_history")

@@ -1,7 +1,7 @@
 import json
 import os
 from datetime import datetime
-from config import CHAT_FILE, EMOTION_FILE, SURVEY_FILE, ACHIEVEMENT_FILE
+from config import CHAT_FILE, EMOTION_FILE, SURVEY_FILE, ACHIEVEMENT_FILE, ACHIEVEMENTS
 
 def load_chat_history():
     if os.path.exists(CHAT_FILE):

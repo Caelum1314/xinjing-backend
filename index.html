@@ -888,7 +888,12 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    const API_BASE = "http://192.168.93.137:8000";
+    // 后端地址自动推断，换台机器也不用改代码：
+    //   1) 默认取当前页面的主机名 + 8000 端口（本机是 localhost，局域网访问则是本机 IP）
+    //   2) 直接双击打开 index.html 时主机名为空，回退到 localhost
+    //   3) 需要指定其它后端时，在网址后加 ?api=192.168.1.10
+    const API_HOST = new URLSearchParams(location.search).get('api') || location.hostname || 'localhost';
+    const API_BASE = `http://${API_HOST}:8000`;
     let stream = null, isCameraOn = false, emotionInterval = null;
     let currentEmotion = "平静";
     let retryCount = 0;
