@@ -1,5 +1,11 @@
 # 心镜 · 多模态 AI 心理陪伴助手（后端服务）
 
+[![CI](https://github.com/Caelum1314/xinjing-backend/actions/workflows/ci.yml/badge.svg)](https://github.com/Caelum1314/xinjing-backend/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-latest-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Release](https://img.shields.io/github/v/release/Caelum1314/xinjing-backend?color=orange)](https://github.com/Caelum1314/xinjing-backend/releases)
+
 基于 **FastAPI + Uvicorn** 的多模态情感计算后端，接入 **OpenCV / DeepFace / Whisper**，
 实现图像情绪识别、语音转写与文本对话，并提供心理问卷、成就系统与情感报告导出能力。
 
